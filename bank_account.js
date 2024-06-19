@@ -2,14 +2,34 @@ let balance = 0;
 
 function deposit() {
     let money = window.prompt("Deposit: ");
-    balance += Number(money);
-    document.getElementById("balance").textContent = `Balance: ${balance}`;
-    alert(`Balance: ${balance}`);
+    if (validateInput(money)) {
+        balance += Number(money);
+        updateBalanceElement();
+        alert(`Balance: ${balance}`);
+    } else {
+        alert('Invalid Input!');
+    }
 }
 
 function withdraw() {
     let money = window.prompt("Withdraw: ");
-    balance -= Number(money);
+    if (validateInput(money)) {
+        if (money > balance) {
+            alert('Balance is not enough!');
+        } else {
+            balance -= Number(money);
+            updateBalanceElement();
+            alert(`Balance: ${balance}`);
+        }
+    } else {
+        alert('Invalid Input!');
+    }
+}
+
+function updateBalanceElement() {
     document.getElementById("balance").textContent = `Balance: ${balance}`;
-    alert(`Balance: ${balance}`);
+}
+
+function validateInput(money) {
+    return !isNaN(money) && money >= 0;
 }
